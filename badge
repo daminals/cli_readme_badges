@@ -1,0 +1,3 @@
+#!/bin/bash
+
+./target/debug/cli_readme_badges
