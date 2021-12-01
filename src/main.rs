@@ -1,33 +1,34 @@
-use std::collections::HashMap;
 use std::io;
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let args_: &str = args();
-    let resp = reqwest::get(format!("https://shields.io/endpoint?{}",args_))
-        .await?
-        .json::<HashMap<String, String>>()
-        .await?;
-    println!("{:#?}", resp);
-    Ok(())
+async fn main(){
+    let args_ = args();
+    let full_url: &str = &format!("https://img.shields.io/badge/{}",args_)[..];
+    //println!("{}",full_url);
 }
 
 fn args () -> String {
-    println!("Label name: ");
+    println!("\nLabel name: ");
     let mut labelAsk = String::new();
     io::stdin()
     .read_line(&mut labelAsk)
     .expect("Failed to read line");
 
-    println!("Color: ");
+    println!("\nMessage: ");
+    let mut messageAsk = String::new();
+    io::stdin()
+    .read_line(&mut messageAsk)
+    .expect("Failed to read line");
+
+    println!("\nColor: ");
     let mut colorAsk = String::new();
     io::stdin()
     .read_line(&mut colorAsk)
     .expect("Failed to read line");    
 
-    let SchemaVersion = "1";
     let label: &str = labelAsk.trim();
+    let message: &str = messageAsk.trim();
     let color: &str = colorAsk.trim();
 
-    return format!("SchemaVersion={}&label={}&color={}", SchemaVersion, label, color);
+    return format!("{}-{}-181717?color={}",label,message,color);
 }
