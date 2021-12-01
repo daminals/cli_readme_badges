@@ -1,14 +1,15 @@
 use std::io;
 
 fn main(){
-    let args_ = args();
-    let full_url: &str = &format!("https://img.shields.io/badge/{}",args_)[..];
-    let md_form = markdown_format(full_url);
+    let full_args = args();
+    let args_0 = full_args.0;
+    let full_url: &str = &format!("https://img.shields.io/badge/{}",args_0)[..];
+    let md_form = markdown_format(full_url, full_args.1);
     linebreak();
     println!("\n{}",md_form);
 }
 
-fn args () -> String {
+fn args () -> (String, String) {
     let mut labelAsk = ask_input("Label: "); 
     let mut messageAsk = ask_input("Message: ");
     let mut colorAsk = ask_input("Color: ");
@@ -16,12 +17,12 @@ fn args () -> String {
     let label: &str = labelAsk.trim();
     let message: &str = messageAsk.trim();
     let color: &str = colorAsk.trim();
-    
-    return format!("{}-{}-181717?color={}",label,message,color);
+
+    return (format!("{}-{}-181717?color={}",label,message,color), label.to_owned());
 }
 
-fn markdown_format(link: &str) -> String {    
-    return format!("![github repo badge]({})", link);
+fn markdown_format(link: &str, alt_text: String) -> String {
+    return format!("![github repo badge: {}]({})", alt_text.replace("%20"," "), link);
 }
 
 fn linebreak () {
