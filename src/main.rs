@@ -1,10 +1,10 @@
 use std::io;
 
-#[tokio::main]
-async fn main(){
+fn main(){
     let args_ = args();
     let full_url: &str = &format!("https://img.shields.io/badge/{}",args_)[..];
     let md_form = markdown_format(full_url);
+    linebreak();
     println!("{}",md_form);
 }
 
